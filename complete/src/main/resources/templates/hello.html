@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Hello World!</title>
+    <link th:href="@{/resources/css/bootstrap.css}" href="../resources/css/bootstrap.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<h1>User List</h1>
+
+<!--
+<form th:action="@{/save}" method="post">
+    <input type="submit" value="Save new users"/>
+</form>
+-->
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Login</th>
+        <th>Role</th>
+        <th th:if="${#httpServletRequest.remoteUser == 'admin'}">Action</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">123</td>
+        <td th:text="${user.name}">Spring in Action</td>
+        <td th:text="${user.login}">Wrox</td>
+        <td th:text="${user.role.name}">Wrox || ${user.role}</td>
+        <td th:if="${#httpServletRequest.remoteUser == 'admin'}">
+            <button name="edit" type="edit" value="edit" authorities="ROLE_ADMIN">EDIT</button>
+        </td>
+    </tr>
+</table>
+
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
